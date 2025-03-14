@@ -45,9 +45,9 @@ export const AnimatedTestimonials = ({
 		return Math.floor(Math.random() * 21) - 10;
 	};
 	return (
-		<div className="antialiased lg:col-span-2">
-			<div className="relative grid grid-cols-1 md:grid-cols-2 gap-20">
-				<div>
+		<div className="antialiased lg:col-span-2 mt-16">
+			<div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+				<div className="lg:col-span-2">
 					<div className="relative h-80 w-full">
 						<AnimatePresence>
 							{testimonials.map((testimonial, index) => (
@@ -96,7 +96,7 @@ export const AnimatedTestimonials = ({
 						</AnimatePresence>
 					</div>
 				</div>
-				<div className="flex justify-between flex-col py-4">
+				<div className="lg:col-span-3 flex justify-between flex-col py-4">
 					<motion.div
 						key={active}
 						initial={{
