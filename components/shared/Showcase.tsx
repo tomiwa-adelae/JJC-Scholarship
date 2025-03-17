@@ -9,14 +9,20 @@ const Showcase = ({
 	description,
 	cta,
 	image,
+	fullScreen = false,
 }: {
 	title: string;
 	description: string;
 	cta?: any;
 	image?: string;
+	fullScreen?: boolean;
 }) => {
 	return (
-		<div className="bg-gradient-to-br from-[#AADDAA]/30 to-[#6C936C] min-h-[70vh]">
+		<div
+			className={`bg-gradient-to-br from-[#AADDAA]/30 to-[#6C936C] ${
+				fullScreen ? "min-h-[90vh]" : "min-h-[70vh]"
+			}`}
+		>
 			<div className="container">
 				<Header />
 				<div

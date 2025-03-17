@@ -1,14 +1,17 @@
 "use client";
 import { useState } from "react";
 import PersonalInformationForm from "./PersonalInformationForm";
-import FormPersonalDetails from "./FormPersonalDetails";
 import AcademicInformationForm from "./AcademicInformationForm";
+import ScholarshipCriteriaForm from "./ScholarshipCriteria";
+import SupportingDocumentsForm from "./SupportingDocumentsForm";
+import ParentalInformationForm from "./ParentalInformationForm";
+import AgreementForm from "./AgreementForm";
 
 const ApplicationForm = () => {
-	const [step, setStep] = useState(2);
+	const [step, setStep] = useState(1);
 
-	// ✅ Store all form data in a single state object
 	const [formData, setFormData] = useState({
+		// Personal Information Fields
 		firstName: "",
 		lastName: "",
 		middleName: "",
@@ -19,48 +22,60 @@ const ApplicationForm = () => {
 		stateOfOrigin: "",
 		residentialAddress: "",
 		dob: "",
+
+		// Academic Information Fields
 		currentEducationalLevel: "",
 		schoolName: "",
 		universityAdmissionStatus: "",
 		jambScore: "",
 		jambSubjects: [],
+		schoolOfChoice: "",
+		courseOfChoice: "",
+		oLevelResult: [] as File[],
+
+		// Scholarship Criteria Fields
+		otherScholarship: "",
+		reasonForApplication: "",
+		careerGoals: "",
+		challengesFaced: "",
+		leadershipExperience: "",
+
+		// Supporting Documents
+		passportPhoto: [] as File[],
+		recommendationLetter: [] as File[],
+
+		// Guardian's fields
+		guardianFullName: "",
+		guardianEmail: "",
+		guardianPhoneNumber: "",
+		guardianOccupation: "",
+
+		// Agreement
+		confirmInformation: false,
+		agreeToTerms: false,
 	});
 
-	// const handleChange =
-	// 	(input: keyof typeof formData) =>
-	// 	(e: Date | string | React.ChangeEvent<HTMLInputElement>) => {
-	// 		setFormData((prev) => ({
-	// 			...prev,
-	// 			[input]:
-	// 				e instanceof Date
-	// 					? e.toISOString() // ✅ Convert Date to ISO string
-	// 					: typeof e === "string"
-	// 					? e // ✅ If string, store as is
-	// 					: e.target.value, // ✅ If event, extract `target.value`
-	// 		}));
-	// 	};
-	// const handleChange =
-	// 	(input: keyof typeof formData) =>
-	// 	(e: string | string[] | React.ChangeEvent<HTMLInputElement>) => {
-	// 		setFormData((prev) => ({
-	// 			...prev,
-	// 			[input]: Array.isArray(e)
-	// 				? e
-	// 				: typeof e === "string"
-	// 				? e
-	// 				: e.target.value,
-	// 		}));
-	// 	};
 	const handleChange =
 		(input: keyof typeof formData) =>
-		(e: string | string[] | React.ChangeEvent<HTMLInputElement>) => {
+		(
+			e:
+				| string
+				| string[]
+				| boolean
+				| File[]
+				| React.ChangeEvent<HTMLInputElement>
+				| React.ChangeEvent<HTMLTextAreaElement>
+		) => {
 			setFormData((prev) => ({
 				...prev,
-				[input]: Array.isArray(e)
-					? e
-					: typeof e === "string"
-					? e
-					: e.target.value, // ✅ Handle arrays properly
+				[input]:
+					typeof e === "boolean"
+						? e
+						: Array.isArray(e) || e instanceof FileList
+						? e
+						: typeof e === "string"
+						? e
+						: e.target.value,
 			}));
 		};
 
@@ -82,7 +97,53 @@ const ApplicationForm = () => {
 					nextStep={nextStep}
 					prevStep={prevStep}
 					handleChange={handleChange}
-					values={formData}
+					values={{
+						...formData,
+					}}
+				/>
+			)}
+
+			{step === 3 && (
+				<ScholarshipCriteriaForm
+					nextStep={nextStep}
+					prevStep={prevStep}
+					handleChange={handleChange}
+					values={{
+						...formData,
+					}}
+				/>
+			)}
+
+			{step === 4 && (
+				<SupportingDocumentsForm
+					nextStep={nextStep}
+					prevStep={prevStep}
+					handleChange={handleChange}
+					values={{
+						...formData,
+					}}
+				/>
+			)}
+
+			{step === 5 && (
+				<ParentalInformationForm
+					nextStep={nextStep}
+					prevStep={prevStep}
+					handleChange={handleChange}
+					values={{
+						...formData,
+					}}
+				/>
+			)}
+
+			{step === 6 && (
+				<AgreementForm
+					nextStep={nextStep}
+					prevStep={prevStep}
+					handleChange={handleChange}
+					values={{
+						...formData,
+					}}
 				/>
 			)}
 		</div>

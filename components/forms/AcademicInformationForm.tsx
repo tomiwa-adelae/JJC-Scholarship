@@ -19,35 +19,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { admissionStatus, educationalLevels } from "@/constants";
+import { admissionStatus, educationalLevels, subjects } from "@/constants";
 import { Checkbox } from "@/components/ui/checkbox";
-
-const items = [
-	{
-		id: "recents",
-		label: "Recents",
-	},
-	{
-		id: "home",
-		label: "Home",
-	},
-	{
-		id: "applications",
-		label: "Applications",
-	},
-	{
-		id: "desktop",
-		label: "Desktop",
-	},
-	{
-		id: "downloads",
-		label: "Downloads",
-	},
-	{
-		id: "documents",
-		label: "Documents",
-	},
-] as const;
+import { FileUpload } from "@/components/ui/file-upload";
+import React, { useState } from "react";
 
 type FormValues = z.infer<typeof AcademicInformationFormSchema>;
 
@@ -66,25 +41,36 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 	handleChange,
 	values,
 }) => {
-	const continueHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		nextStep();
-	};
+	// const continueHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+	// 	e.preventDefault();
+	// 	nextStep();
+	// };
 
-	const backHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		prevStep();
-	};
+	// const backHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+	// 	e.preventDefault();
+	// 	prevStep();
+	// };
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(AcademicInformationFormSchema),
 		defaultValues: values, // ✅ Pre-fill values when going back
 	});
 
-	const onSubmit = async (data: FormValues) => {
-		console.log("Validated data:", data);
-		nextStep(); // Proceed to the next form
-	};
+	// const [files, setFiles] = useState<File[]>([]);
+	// const handleFileUpload = (files: File[]) => {
+	// 	setFiles(files);
+	// 	console.log(files);
+	// };
+
+	const onSubmit = form.handleSubmit(
+		(data) => {
+			console.log("Validated data:", data);
+			nextStep(); // ✅ Only moves to the next step if the form is valid
+		},
+		(errors) => {
+			console.log("Validation errors:", errors); // ✅ Logs errors to debug
+		}
+	);
 
 	return (
 		<div>
@@ -93,6 +79,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 			</h3>
 			<Form {...form}>
 				<form
+					// @ts-ignore
 					onSubmit={form.handleSubmit(onSubmit)}
 					className="space-y-6"
 				>
@@ -104,12 +91,12 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 								<FormLabel>Current educational level</FormLabel>
 								<Select
 									onValueChange={(value) => {
-										field.onChange(value); // ✅ Updates react-hook-form state
+										field.onChange(value);
 										handleChange("currentEducationalLevel")(
 											value
-										); // ✅ Updates global form state
+										);
 									}}
-									value={field.value} // ✅ Ensure the value persists
+									value={field.value}
 									defaultValue={field.value}
 								>
 									<FormControl>
@@ -165,12 +152,12 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 									</FormLabel>
 									<Select
 										onValueChange={(value) => {
-											field.onChange(value); // ✅ Updates react-hook-form state
+											field.onChange(value);
 											handleChange(
 												"universityAdmissionStatus"
-											)(value); // ✅ Updates global form state
+											)(value);
 										}}
-										value={field.value} // ✅ Ensure the value persists
+										value={field.value}
 										defaultValue={field.value}
 									>
 										<FormControl>
@@ -201,7 +188,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 						name="jambScore"
 						render={({ field }) => (
 							<FormItem className="col-span-2 md:col-span-1">
-								<FormLabel>JAMB Score name</FormLabel>
+								<FormLabel>JAMB Score</FormLabel>
 								<FormControl>
 									<Input
 										placeholder="Enter your JAMB score"
@@ -223,9 +210,9 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 							<FormItem>
 								<FormLabel>JAMB Subjects</FormLabel>
 								<div className="flex flex-wrap gap-8">
-									{items.map((item) => {
+									{subjects.map((item) => {
 										const selectedValues: string[] =
-											field.value || []; // ✅ Ensure it defaults to an array
+											field.value || [];
 
 										return (
 											<FormField
@@ -233,7 +220,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 												control={form.control}
 												name="jambSubjects"
 												render={() => (
-													<FormItem className="flex flex-row items-start space-x-3 space-y-0 mt-2">
+													<FormItem className="flex flex-row subjects-start space-x-3 space-y-0 mt-2">
 														<FormControl>
 															<Checkbox
 																checked={selectedValues.includes(
@@ -247,24 +234,24 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 																			? [
 																					...selectedValues,
 																					item.id,
-																			  ] // ✅ Add selected subject
+																			  ]
 																			: selectedValues.filter(
 																					(
 																						value
 																					) =>
 																						value !==
 																						item.id
-																			  ); // ✅ Remove unchecked subject
+																			  );
 
 																	field.onChange(
 																		updatedSubjects
-																	); // ✅ Update react-hook-form state
+																	);
 																	handleChange(
 																		"jambSubjects"
 																	)(
 																		// @ts-ignore
 																		updatedSubjects
-																	); // ✅ Update global state
+																	);
 																}}
 															/>
 														</FormControl>
@@ -331,20 +318,32 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 							)}
 						/>
 					</div>
+					<FormField
+						control={form.control}
+						name="oLevelResult"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>
+									O'level results (WAEC, NECO, GCE)
+								</FormLabel>
+								<div className="border border-input rounded-md mt-3 bg-background">
+									<FileUpload
+										onChange={(files) => {
+											field.onChange(files);
+											// @ts-ignore
+											handleChange("oLevelResult")(files);
+										}}
+									/>
+								</div>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 					<div className="flex justify-between mt-6">
-						<Button
-							size={"lg"}
-							onClick={backHandler}
-							variant="outline"
-						>
+						<Button size="lg" onClick={prevStep} variant="outline">
 							Back
 						</Button>
-						<Button
-							size={"lg"}
-							type="submit"
-							onClick={continueHandler}
-							className="ml-2"
-						>
+						<Button size="lg" type="submit" className="ml-2">
 							Continue
 						</Button>
 					</div>

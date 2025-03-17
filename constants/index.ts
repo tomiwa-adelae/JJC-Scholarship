@@ -130,3 +130,30 @@ export const educationalLevels = [
 ];
 
 export const admissionStatus = ["accepted", "awaiting result", "others"];
+
+export const subjects = [
+	{
+		id: "recents",
+		label: "Recents",
+	},
+	{
+		id: "home",
+		label: "Home",
+	},
+	{
+		id: "applications",
+		label: "Applications",
+	},
+	{
+		id: "desktop",
+		label: "Desktop",
+	},
+	{
+		id: "downloads",
+		label: "Downloads",
+	},
+	{
+		id: "documents",
+		label: "Documents",
+	},
+] as const;

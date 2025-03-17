@@ -52,12 +52,12 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
 }) => {
 	const form = useForm<FormValues>({
 		resolver: zodResolver(PersonalInformationFormSchema),
-		defaultValues: values, // ✅ Pre-fill values when going back
+		defaultValues: values,
 	});
 
 	const onSubmit = async (data: FormValues) => {
 		console.log("Validated data:", data);
-		nextStep(); // Proceed to the next form
+		nextStep();
 	};
 
 	return (
@@ -168,7 +168,7 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
 												field.onChange(phone);
 												handleChange("phoneNumber")(
 													phone || ""
-												); // ✅ Ensure string format
+												);
 											}}
 											defaultCountry="NG"
 											className="flex h-14 w-full rounded-md border border-input bg-background px-3 py-2 text-base sm:text-sm"
@@ -188,10 +188,10 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
 									<FormLabel>Gender</FormLabel>
 									<Select
 										onValueChange={(value) => {
-											field.onChange(value); // ✅ Updates react-hook-form state
-											handleChange("gender")(value); // ✅ Updates global form state
+											field.onChange(value);
+											handleChange("gender")(value);
 										}}
-										value={field.value} // ✅ Ensure the value persists
+										value={field.value}
 										defaultValue={field.value}
 									>
 										<FormControl>
@@ -257,15 +257,15 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
 													field.value
 														? new Date(field.value)
 														: undefined
-												} // ✅ Ensure it's a Date object
+												}
 												onSelect={(date) => {
 													if (date) {
 														const isoDate =
-															date.toISOString(); // ✅ Convert to string
-														field.onChange(isoDate); // ✅ Update react-hook-form state
+															date.toISOString();
+														field.onChange(isoDate);
 														handleChange("dob")(
 															isoDate
-														); // ✅ Update global state
+														);
 													}
 												}}
 												disabled={(date) =>
@@ -311,10 +311,10 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
 									<FormLabel>State of Origin</FormLabel>
 									<Select
 										onValueChange={(value) => {
-											field.onChange(value); // ✅ Update react-hook-form state
+											field.onChange(value);
 											handleChange("stateOfOrigin")(
 												value
-											); // ✅ Update global form state
+											);
 										}}
 										defaultValue={field.value}
 									>
@@ -364,12 +364,7 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
 						)}
 					/>
 
-					<Button
-						type="submit"
-						// disabled={!form.formState.isValid}
-						className="w-full mt-4"
-						size={"lg"}
-					>
+					<Button type="submit" className="w-full mt-4" size={"lg"}>
 						Continue
 					</Button>
 				</form>

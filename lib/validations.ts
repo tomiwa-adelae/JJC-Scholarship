@@ -68,5 +68,66 @@ export const AcademicInformationFormSchema = z.object({
 	courseOfChoice: z.string().min(2, {
 		message: "The course of your course is required.",
 	}),
-	oLevelResult: z.string().url({ message: "Upload your O'level result." }),
+	oLevelResult: z.custom<File[]>((files) => files && files.length > 0, {
+		message: "Please upload your O'level result.",
+	}),
+});
+
+export const ScholarshipCriteriaFormSchema = z.object({
+	otherScholarship: z.string().min(2, {
+		message: "Please select an answer.",
+	}),
+	reasonForApplication: z
+		.string()
+		.min(10, { message: "Explain why you need this scholarship." }),
+	careerGoals: z
+		.string()
+		.min(10, { message: "Describe how this scholarship will help you." }),
+	challengesFaced: z.string().min(10, {
+		message: "Describe some of the challenges you've overcome.",
+	}),
+	leadershipExperience: z.string().min(10, {
+		message: "List your leadership roles or extracurricular activities.",
+	}),
+});
+
+export const SupportingDocumentsFormSchema = z.object({
+	passportPhoto: z.custom<File[]>((files) => files && files.length > 0, {
+		message: "Please upload your passport photograph.",
+	}),
+	recommendationLetter: z.custom<File[]>(
+		(files) => files && files.length > 0,
+		{
+			message: "Please upload your recommendation letter.",
+		}
+	),
+});
+
+export const ParentalInformationFormSchema = z.object({
+	guardianFullName: z.string().min(2, {
+		message: "Guardian's full name is required",
+	}),
+	guardianEmail: z.string().email({
+		message: "Guardian's full name is required",
+	}),
+	guardianPhoneNumber: z
+		.string()
+		.regex(/^(\+?\d{10,15})$/, {
+			message: "Please enter a valid phone number.",
+		})
+		.refine(isValidPhoneNumber, {
+			message: "Invalid phone number",
+		}),
+	guardianOccupation: z.string().min(2, {
+		message: "Guardian's full name is required",
+	}),
+});
+
+export const AgreementFormSchema = z.object({
+	confirmInformation: z.boolean().refine((val) => val === true, {
+		message: "You must confirm the information.",
+	}),
+	agreeToTerms: z.boolean().refine((val) => val === true, {
+		message: "You must agree to the terms and conditions.",
+	}),
 });
