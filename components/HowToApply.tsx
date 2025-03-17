@@ -15,7 +15,7 @@ const HowToApply = () => {
 			title: "Check Eligibility",
 			content: (
 				<div>
-					<p className="text-sm leading-loose font-normal mb-4">
+					<p className="text-sm leading-loose font-medium font-normal mb-4">
 						Before applying, ensure you meet the scholarship
 						requirements:
 					</p>
@@ -32,7 +32,9 @@ const HowToApply = () => {
 									height={1000}
 									className="w-5 h-5"
 								/>
-								<p className="text-sm leading-loose">{check}</p>
+								<p className="text-sm leading-loose font-medium">
+									{check}
+								</p>
 							</span>
 						))}
 					</div>
@@ -43,7 +45,7 @@ const HowToApply = () => {
 			title: "Gather Required Documents",
 			content: (
 				<div>
-					<p className="text-sm leading-loose font-normal mb-4">
+					<p className="text-sm leading-loose font-medium font-normal mb-4">
 						Prepare the following documents before starting your
 						application:
 					</p>
@@ -60,7 +62,7 @@ const HowToApply = () => {
 									height={1000}
 									className="w-5 h-5"
 								/>
-								<p className="text-sm leading-loose">
+								<p className="text-sm leading-loose font-medium">
 									{document}
 								</p>
 							</span>
@@ -86,7 +88,7 @@ const HowToApply = () => {
 									height={1000}
 									className="w-5 h-5"
 								/>
-								<p className="text-sm leading-loose">
+								<p className="text-sm leading-loose font-medium">
 									{document}
 								</p>
 							</span>
@@ -112,7 +114,7 @@ const HowToApply = () => {
 									height={1000}
 									className="w-5 h-5"
 								/>
-								<p className="text-sm leading-loose">
+								<p className="text-sm leading-loose font-medium">
 									{document}
 								</p>
 							</span>
