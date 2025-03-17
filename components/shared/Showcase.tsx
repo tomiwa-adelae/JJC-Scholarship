@@ -35,7 +35,7 @@ const Showcase = ({
 						<p className="text-sm leading-loose text-gray-900 font-medium mt-4 mb-6">
 							{description}
 						</p>
-						<div className="flex flex-col sm:flex-row items-center justify-start gap-4">
+						<div className="flex flex-col sm:flex-row items-center justify-start gap-4 w-full">
 							{cta.map(
 								(
 									action: { slug: string; title: string },
