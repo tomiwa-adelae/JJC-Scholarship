@@ -118,3 +118,15 @@ export const contactDetails = [
 		details: "+234 801 234 5678",
 	},
 ];
+
+export const genders = ["Male", "Female"];
+
+export const stateOfOrigins = ["lagos", "oyo", "ondo"];
+
+export const educationalLevels = [
+	"Secondary School",
+	"Undergraduate",
+	"Postgraduate",
+];
+
+export const admissionStatus = ["accepted", "awaiting result", "others"];

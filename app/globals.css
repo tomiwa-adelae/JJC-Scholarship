@@ -90,3 +90,7 @@
 body {
 	overflow-x: hidden !important;
 }
+
+.PhoneInput input {
+	outline: none;
+}

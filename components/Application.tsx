@@ -8,7 +8,7 @@ const Application = () => {
 				<h2 className="text-xl uppercase font-semibold mb-4 md:text-2xl lg:text-3xl text-primary">
 					Complete Your Scholarship Application
 				</h2>
-				<p className="text-sm md:text-base md:leading-loose leading-loose mb-4">
+				<p className="text-sm leading-loose">
 					Take the next step toward your academic success by filling
 					out the JJC Scholarship application form. Provide accurate
 					details, upload the necessary documents, and ensure all

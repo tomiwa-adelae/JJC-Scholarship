@@ -1,6 +1,7 @@
 import Application from "@/components/Application";
+import ContactUs from "@/components/shared/ContactUs";
+import FAQs from "@/components/shared/FAQs";
 import Showcase from "@/components/shared/Showcase";
-import React from "react";
 
 const page = () => {
 	return (
@@ -15,6 +16,8 @@ const page = () => {
 				cta={[{ title: "Apply now", slug: "/apply" }]}
 			/>
 			<Application />
+			<FAQs />
+			<ContactUs />
 		</div>
 	);
 };

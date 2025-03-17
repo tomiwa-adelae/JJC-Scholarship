@@ -1,79 +1,92 @@
 "use client";
-
-import React, { useState } from "react";
-import FormPersonalDetails from "./FormPersonalDetails";
-import Confirm from "./Confirm";
-import Success from "./Success";
+import { useState } from "react";
 import PersonalInformationForm from "./PersonalInformationForm";
-
-// Define the structure of form data
-interface FormData {
-	firstName: string;
-	lastName: string;
-	email: string;
-	occupation: string;
-	city: string;
-	bio: string;
-}
+import FormPersonalDetails from "./FormPersonalDetails";
+import AcademicInformationForm from "./AcademicInformationForm";
 
 const ApplicationForm = () => {
-	const [step, setStep] = useState<number>(1);
-	const [formData, setFormData] = useState<FormData>({
+	const [step, setStep] = useState(2);
+
+	// ✅ Store all form data in a single state object
+	const [formData, setFormData] = useState({
 		firstName: "",
 		lastName: "",
+		middleName: "",
 		email: "",
-		occupation: "",
-		city: "",
-		bio: "",
+		phoneNumber: "",
+		gender: "",
+		nationality: "",
+		stateOfOrigin: "",
+		residentialAddress: "",
+		dob: "",
+		currentEducationalLevel: "",
+		schoolName: "",
+		universityAdmissionStatus: "",
+		jambScore: "",
+		jambSubjects: [],
 	});
 
-	// Proceed to next step
-	const nextStep = () => setStep((prevStep) => prevStep + 1);
-
-	// Go back to previous step
-	const prevStep = () => setStep((prevStep) => prevStep - 1);
-
-	// Handle input field changes
+	// const handleChange =
+	// 	(input: keyof typeof formData) =>
+	// 	(e: Date | string | React.ChangeEvent<HTMLInputElement>) => {
+	// 		setFormData((prev) => ({
+	// 			...prev,
+	// 			[input]:
+	// 				e instanceof Date
+	// 					? e.toISOString() // ✅ Convert Date to ISO string
+	// 					: typeof e === "string"
+	// 					? e // ✅ If string, store as is
+	// 					: e.target.value, // ✅ If event, extract `target.value`
+	// 		}));
+	// 	};
+	// const handleChange =
+	// 	(input: keyof typeof formData) =>
+	// 	(e: string | string[] | React.ChangeEvent<HTMLInputElement>) => {
+	// 		setFormData((prev) => ({
+	// 			...prev,
+	// 			[input]: Array.isArray(e)
+	// 				? e
+	// 				: typeof e === "string"
+	// 				? e
+	// 				: e.target.value,
+	// 		}));
+	// 	};
 	const handleChange =
-		(input: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement>) => {
-			setFormData({ ...formData, [input]: e.target.value });
+		(input: keyof typeof formData) =>
+		(e: string | string[] | React.ChangeEvent<HTMLInputElement>) => {
+			setFormData((prev) => ({
+				...prev,
+				[input]: Array.isArray(e)
+					? e
+					: typeof e === "string"
+					? e
+					: e.target.value, // ✅ Handle arrays properly
+			}));
 		};
 
-	// Render components based on the step
-	switch (step) {
-		case 1:
-			return (
+	// ✅ Step navigation handlers
+	const nextStep = () => setStep((prev) => prev + 1);
+	const prevStep = () => setStep((prev) => prev - 1);
+
+	return (
+		<div className="mt-10">
+			{step === 1 && (
 				<PersonalInformationForm
 					nextStep={nextStep}
 					handleChange={handleChange}
 					values={formData}
 				/>
-			);
-		case 2:
-			return (
-				<FormPersonalDetails
+			)}
+			{step === 2 && (
+				<AcademicInformationForm
 					nextStep={nextStep}
 					prevStep={prevStep}
 					handleChange={handleChange}
 					values={formData}
 				/>
-			);
-		case 3:
-			return (
-				<Confirm
-					nextStep={nextStep}
-					prevStep={prevStep}
-					values={formData}
-				/>
-			);
-		case 4:
-			return <Success />;
-		default:
-			console.log(
-				"This is a multi-step form built with React & TypeScript."
-			);
-			return null;
-	}
+			)}
+		</div>
+	);
 };
 
 export default ApplicationForm;
