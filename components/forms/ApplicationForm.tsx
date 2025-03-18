@@ -6,6 +6,7 @@ import ScholarshipCriteriaForm from "./ScholarshipCriteria";
 import SupportingDocumentsForm from "./SupportingDocumentsForm";
 import ParentalInformationForm from "./ParentalInformationForm";
 import AgreementForm from "./AgreementForm";
+import ConfirmInformation from "./ConfirmInformation";
 
 const ApplicationForm = () => {
 	const [step, setStep] = useState(1);
@@ -41,8 +42,8 @@ const ApplicationForm = () => {
 		leadershipExperience: "",
 
 		// Supporting Documents
-		passportPhoto: [] as File[],
-		recommendationLetter: [] as File[],
+		passportPhoto: null as File | null, // ✅ Store as File
+		recommendationLetter: null as File | null, // ✅ Store as File
 
 		// Guardian's fields
 		guardianFullName: "",
@@ -78,6 +79,24 @@ const ApplicationForm = () => {
 						: e.target.value,
 			}));
 		};
+
+	// const handleChange =
+	// 	(input: keyof typeof formData) =>
+	// 	(
+	// 		e:
+	// 			| string
+	// 			| string[]
+	// 			| boolean
+	// 			| File
+	// 			| null
+	// 			| React.ChangeEvent<HTMLInputElement>
+	// 	) => {
+	// 		setFormData((prev) => ({
+	// 			...prev,
+	// 			//   @ts-ignore
+	// 			[input]: e instanceof File ? e : e?.target?.files?.[0] || e,
+	// 		}));
+	// 	};
 
 	// ✅ Step navigation handlers
 	const nextStep = () => setStep((prev) => prev + 1);
@@ -119,6 +138,7 @@ const ApplicationForm = () => {
 					nextStep={nextStep}
 					prevStep={prevStep}
 					handleChange={handleChange}
+					// @ts-ignore
 					values={{
 						...formData,
 					}}
@@ -143,6 +163,17 @@ const ApplicationForm = () => {
 					handleChange={handleChange}
 					values={{
 						...formData,
+					}}
+				/>
+			)}
+
+			{step === 7 && (
+				<ConfirmInformation
+					nextStep={nextStep}
+					prevStep={prevStep}
+					formData={{
+						...formData,
+						jambSubjects: formData.jambSubjects || [], // ✅ Ensure it's always an array
 					}}
 				/>
 			)}

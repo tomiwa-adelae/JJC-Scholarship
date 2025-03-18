@@ -1,6 +1,15 @@
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
+// ✅ Allowed file types
+const acceptedImageTypes = [
+	"image/jpeg",
+	"image/png",
+	"image/jpg",
+	"image/gif",
+	"image/webp",
+];
+
 export const PersonalInformationFormSchema = z.object({
 	firstName: z.string().min(2, {
 		message: "First name must be at least 2 characters.",
@@ -92,9 +101,11 @@ export const ScholarshipCriteriaFormSchema = z.object({
 });
 
 export const SupportingDocumentsFormSchema = z.object({
-	passportPhoto: z.custom<File[]>((files) => files && files.length > 0, {
-		message: "Please upload your passport photograph.",
-	}),
+	passportPhoto: z
+		.instanceof(File)
+		.refine((file) => acceptedImageTypes.includes(file.type), {
+			message: "Only JPG, PNG, GIF, and WebP images are allowed.",
+		}),
 	recommendationLetter: z.custom<File[]>(
 		(files) => files && files.length > 0,
 		{

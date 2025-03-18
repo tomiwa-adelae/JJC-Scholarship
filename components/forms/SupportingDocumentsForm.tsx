@@ -67,7 +67,7 @@ const SupportingDocumentsForm: React.FC<AcademicInformationProps> = ({
 					className="space-y-6"
 				>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-						<FormField
+						{/* <FormField
 							control={form.control}
 							name="passportPhoto"
 							render={({ field }) => (
@@ -89,7 +89,33 @@ const SupportingDocumentsForm: React.FC<AcademicInformationProps> = ({
 									<FormMessage />
 								</FormItem>
 							)}
+						/> */}
+						<FormField
+							control={form.control}
+							name="passportPhoto"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Recent Passport Photograph
+									</FormLabel>
+									<div className="border border-input rounded-md mt-3 bg-background p-4">
+										<FileUpload
+											onChange={(files) => {
+												if (files.length > 0) {
+													field.onChange(files[0]); // ✅ Only store the first file
+													handleChange(
+														"passportPhoto"
+														// @ts-ignore
+													)(files);
+												}
+											}}
+										/>
+									</div>
+									<FormMessage />
+								</FormItem>
+							)}
 						/>
+
 						<FormField
 							control={form.control}
 							name="recommendationLetter"

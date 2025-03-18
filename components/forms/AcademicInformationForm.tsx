@@ -220,11 +220,11 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 												control={form.control}
 												name="jambSubjects"
 												render={() => (
-													<FormItem className="flex flex-row subjects-start space-x-3 space-y-0 mt-2">
+													<FormItem className="flex flex-row items-start space-x-3 space-y-0 mt-2">
 														<FormControl>
 															<Checkbox
 																checked={selectedValues.includes(
-																	item.id
+																	item.label
 																)}
 																onCheckedChange={(
 																	checked
@@ -233,14 +233,14 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 																		checked
 																			? [
 																					...selectedValues,
-																					item.id,
+																					item.label,
 																			  ]
 																			: selectedValues.filter(
 																					(
 																						value
 																					) =>
 																						value !==
-																						item.id
+																						item.label
 																			  );
 
 																	field.onChange(
@@ -268,6 +268,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 							</FormItem>
 						)}
 					/>
+
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<FormField
 							control={form.control}

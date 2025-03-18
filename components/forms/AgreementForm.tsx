@@ -5,7 +5,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useRouter } from "next/navigation";
 
 type FormValues = z.infer<typeof AgreementFormSchema>;
 
@@ -24,7 +23,6 @@ const AgreementForm: React.FC<AcademicInformationProps> = ({
 	handleChange,
 	values,
 }) => {
-	const router = useRouter();
 	const continueHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		nextStep();
@@ -43,7 +41,7 @@ const AgreementForm: React.FC<AcademicInformationProps> = ({
 	const onSubmit = form.handleSubmit(
 		(data) => {
 			console.log("Validated data:", data);
-			router.push("/success-application");
+			nextStep();
 		},
 		(errors) => {
 			console.log("Validation errors:", errors);
@@ -53,7 +51,7 @@ const AgreementForm: React.FC<AcademicInformationProps> = ({
 	return (
 		<div>
 			<h3 className="text-lg uppercase font-semibold mb-6 text-primary">
-				4. Agreement & Submission
+				6. Agreement & Submission
 			</h3>
 			<Form {...form}>
 				<form
@@ -118,7 +116,7 @@ const AgreementForm: React.FC<AcademicInformationProps> = ({
 							Back
 						</Button>
 						<Button size="lg" type="submit" className="ml-2">
-							Submit
+							Continue
 						</Button>
 					</div>
 				</form>
