@@ -23,6 +23,8 @@ import { admissionStatus, educationalLevels, subjects } from "@/constants";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FileUpload } from "@/components/ui/file-upload";
 import React, { useState } from "react";
+import { uploadDocuments } from "@/lib/actions/upload.actions";
+import { Loader2 } from "lucide-react";
 
 type FormValues = z.infer<typeof AcademicInformationFormSchema>;
 
@@ -41,26 +43,12 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 	handleChange,
 	values,
 }) => {
-	// const continueHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-	// 	e.preventDefault();
-	// 	nextStep();
-	// };
-
-	// const backHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-	// 	e.preventDefault();
-	// 	prevStep();
-	// };
+	const [loading, setLoading] = useState(false);
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(AcademicInformationFormSchema),
 		defaultValues: values, // ✅ Pre-fill values when going back
 	});
-
-	// const [files, setFiles] = useState<File[]>([]);
-	// const handleFileUpload = (files: File[]) => {
-	// 	setFiles(files);
-	// 	console.log(files);
-	// };
 
 	const onSubmit = form.handleSubmit(
 		(data) => {
@@ -329,10 +317,35 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 								</FormLabel>
 								<div className="border border-input rounded-md mt-3 bg-background">
 									<FileUpload
+										loading={loading}
 										onChange={(files) => {
-											field.onChange(files);
-											// @ts-ignore
-											handleChange("oLevelResult")(files);
+											const reader = new FileReader();
+											reader.readAsDataURL(files[0]);
+											reader.onload = async () => {
+												try {
+													const binaryString =
+														reader.result;
+
+													setLoading(true);
+
+													const result =
+														await uploadDocuments(
+															binaryString
+														);
+
+													field.onChange(result?.url);
+													handleChange(
+														"oLevelResult"
+													)(
+														// @ts-ignore
+														result.url
+													);
+												} catch (error) {
+													setLoading(false);
+												} finally {
+													setLoading(false);
+												}
+											};
 										}}
 									/>
 								</div>
@@ -344,8 +357,19 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 						<Button size="lg" onClick={prevStep} variant="outline">
 							Back
 						</Button>
-						<Button size="lg" type="submit" className="ml-2">
-							Continue
+						<Button
+							disabled={loading}
+							size="lg"
+							type="submit"
+							className="ml-2"
+						>
+							{loading ? (
+								<>
+									<Loader2 className="w-4 h-4 animate-spin transition-all" />
+								</>
+							) : (
+								"Continue"
+							)}
 						</Button>
 					</div>
 				</form>

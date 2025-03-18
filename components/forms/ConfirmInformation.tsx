@@ -1,22 +1,20 @@
 "use client";
 
+import { registerScholarship } from "@/lib/actions/user.actions";
 import { Button } from "../ui/button";
 import { formatDate } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+
+import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 interface ConfirmInformationProps {
 	nextStep: () => void;
 	prevStep: () => void;
 	formData: any;
 }
-
-// ✅ File Type Icons Mapping
-const MIME_TYPE_MAP: Record<string, string> = {
-	"application/pdf": "/assets/icons/pdf.svg",
-	"application/msword": "/assets/icons/word.svg",
-	"application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-		"/assets/icons/word.svg",
-};
 
 // ✅ Personal Information Fields
 const personalInfoFields = [
@@ -31,15 +29,15 @@ const personalInfoFields = [
 	{ label: "Date of Birth", value: (data: any) => formatDate(data.dob) },
 	{
 		label: "Nationality",
-		value: (data: any) => formatDate(data.nationality),
+		value: (data: any) => data.nationality,
 	},
 	{
 		label: "State of Origin",
-		value: (data: any) => formatDate(data.stateOfOrigin),
+		value: (data: any) => data.stateOfOrigin,
 	},
 	{
 		label: "Residential Address",
-		value: (data: any) => formatDate(data.residentialAddress),
+		value: (data: any) => data.residentialAddress,
 	},
 ];
 
@@ -106,10 +104,29 @@ const ConfirmInformation: React.FC<ConfirmInformationProps> = ({
 	prevStep,
 	formData,
 }) => {
+	const [loading, setLoading] = useState(false);
+
 	const router = useRouter();
 	const handleSubmit = async () => {
-		console.log(formData);
-		router.push("/success-application");
+		try {
+			setLoading(true);
+			const res = await registerScholarship(formData);
+
+			if (res?.status == 400)
+				return toast({
+					title: "Error!",
+					description: res?.message,
+					variant: "destructive",
+				});
+
+			setLoading(false);
+			router.push(`/success-application?id=${res._id}`);
+		} catch (error) {
+			console.error("Submission Failed:", error);
+			setLoading(false);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -150,6 +167,107 @@ const ConfirmInformation: React.FC<ConfirmInformationProps> = ({
 					</div>
 				</div>
 			))}
+			{/* ✅ Supporting documents Confirmation */}
+			<div className="border border-input rounded-lg p-6 mb-4">
+				<h4 className="text-base uppercase text-primary font-semibold mb-4">
+					Supporting documents
+				</h4>
+				<div className="text-xs lg:text-[13px] font-medium text-gray-900 flex items-center justify-start flex-wrap gap-4">
+					<div className="border border-input rounded-lg p-6 mb-4 flex flex-col items-center justify-center text-center">
+						<h5 className="text-sm uppercase font-medium mb-3">
+							O'level result
+						</h5>
+						{formData.oLevelResult.split(".").pop() === "jpg" ? (
+							<Image
+								src={formData.oLevelResult}
+								alt={`${formData.firstName}'s picture`}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						) : formData.oLevelResult.split(".").pop() === "pdf" ? (
+							<Image
+								src={"/assets/icons/pdf.svg"}
+								alt={"PDF Icon"}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						) : (
+							<Image
+								src={"/assets/icons/word.svg"}
+								alt={"WORD Icon"}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						)}
+					</div>
+					<div className="border border-input rounded-lg p-6 mb-4 flex flex-col items-center justify-center text-center">
+						<h5 className="text-sm uppercase font-medium mb-3">
+							Passport photograph
+						</h5>
+						{formData.passportPhoto.split(".").pop() === "jpg" ? (
+							<Image
+								src={formData.passportPhoto}
+								alt={`${formData.firstName}'s picture`}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						) : formData.passportPhoto.split(".").pop() ===
+						  "pdf" ? (
+							<Image
+								src={"/assets/icons/pdf.svg"}
+								alt={"PDF Icon"}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						) : (
+							<Image
+								src={"/assets/icons/word.svg"}
+								alt={"WORD Icon"}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						)}
+					</div>
+					<div className="border border-input rounded-lg p-6 mb-4 flex flex-col items-center justify-center text-center">
+						<h5 className="text-sm uppercase font-medium mb-3">
+							Recommendation letter
+						</h5>
+						{formData.recommendationLetter.split(".").pop() ===
+						"jpg" ? (
+							<Image
+								src={formData.recommendationLetter}
+								alt={`${formData.firstName}'s picture`}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						) : formData.recommendationLetter.split(".").pop() ===
+						  "pdf" ? (
+							<Image
+								src={"/assets/icons/pdf.svg"}
+								alt={"PDF Icon"}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						) : (
+							<Image
+								src={"/assets/icons/word.svg"}
+								alt={"WORD Icon"}
+								width={1000}
+								height={1000}
+								className="h-32 w-32 object-cover rounded-md"
+							/>
+						)}
+					</div>
+				</div>
+			</div>
 			{/* ✅ Agreement Confirmation */}
 			<div className="border border-input rounded-lg p-6 mb-4">
 				<h4 className="text-base uppercase text-primary font-semibold mb-4">
@@ -165,8 +283,20 @@ const ConfirmInformation: React.FC<ConfirmInformationProps> = ({
 				<Button size="lg" onClick={prevStep} variant="outline">
 					Back
 				</Button>
-				<Button size="lg" onClick={handleSubmit} className="ml-2">
-					Submit Application
+				<Button
+					disabled={loading}
+					size="lg"
+					onClick={handleSubmit}
+					className="ml-2"
+				>
+					{loading ? (
+						<>
+							<Loader2 className="w-4 h-4 animate-spin transition-all" />{" "}
+							Submitting...
+						</>
+					) : (
+						"Submit application"
+					)}
 				</Button>
 			</div>
 		</div>

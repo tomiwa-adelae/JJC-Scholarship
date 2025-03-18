@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/shared/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
 			<body className={montserrat.className}>
 				{children}
 				<Footer />
+				<Toaster />
 			</body>
 		</html>
 	);

@@ -17,7 +17,7 @@ const Header = () => {
 			</Link>
 			<div>
 				<Button asChild size="md">
-					<Link href="/">Apply now</Link>
+					<Link href="/apply">Apply now</Link>
 				</Button>
 			</div>
 		</header>

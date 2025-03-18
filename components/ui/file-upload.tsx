@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { IconUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
+import { Loader2 } from "lucide-react";
 
 const mainVariant = {
 	initial: {
@@ -27,8 +28,10 @@ const secondaryVariant = {
 
 export const FileUpload = ({
 	onChange,
+	loading = false,
 }: {
 	onChange?: (files: File[]) => void;
+	loading?: boolean;
 }) => {
 	const [files, setFiles] = useState<File[]>([]);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -78,7 +81,10 @@ export const FileUpload = ({
 						Drag or drop your files here or click to upload
 					</p>
 					<div className="relative w-full mt-10 max-w-xl mx-auto">
-						{files.length > 0 &&
+						{loading ? (
+							<Loader2 className="w-10 h-10 animate-spin transition-all mx-auto text-primary" />
+						) : (
+							files.length > 0 &&
 							files.map((file, idx) => (
 								<motion.div
 									key={"file" + idx}
@@ -137,7 +143,8 @@ export const FileUpload = ({
 										</motion.p>
 									</div>
 								</motion.div>
-							))}
+							))
+						)}
 						{!files.length && (
 							<motion.div
 								layoutId="file-upload"

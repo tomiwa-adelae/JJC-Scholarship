@@ -12,6 +12,9 @@ import {
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { FileUpload } from "@/components/ui/file-upload";
+import { uploadDocuments } from "@/lib/actions/upload.actions";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 type FormValues = z.infer<typeof SupportingDocumentsFormSchema>;
 
@@ -30,15 +33,8 @@ const SupportingDocumentsForm: React.FC<AcademicInformationProps> = ({
 	handleChange,
 	values,
 }) => {
-	const continueHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		nextStep();
-	};
-
-	const backHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		prevStep();
-	};
+	const [loading, setLoading] = useState(false);
+	const [loading2, setLoading2] = useState(false);
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(SupportingDocumentsFormSchema),
@@ -67,29 +63,6 @@ const SupportingDocumentsForm: React.FC<AcademicInformationProps> = ({
 					className="space-y-6"
 				>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-						{/* <FormField
-							control={form.control}
-							name="passportPhoto"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>
-										Recent Passport Photograph
-									</FormLabel>
-									<div className="border border-input rounded-md mt-3 bg-background">
-										<FileUpload
-											onChange={(files) => {
-												field.onChange(files);
-												handleChange("passportPhoto")(
-													// @ts-ignore
-													files
-												);
-											}}
-										/>
-									</div>
-									<FormMessage />
-								</FormItem>
-							)}
-						/> */}
 						<FormField
 							control={form.control}
 							name="passportPhoto"
@@ -100,14 +73,38 @@ const SupportingDocumentsForm: React.FC<AcademicInformationProps> = ({
 									</FormLabel>
 									<div className="border border-input rounded-md mt-3 bg-background p-4">
 										<FileUpload
+											loading={loading}
 											onChange={(files) => {
-												if (files.length > 0) {
-													field.onChange(files[0]); // ✅ Only store the first file
-													handleChange(
-														"passportPhoto"
-														// @ts-ignore
-													)(files);
-												}
+												const reader = new FileReader();
+												reader.readAsDataURL(files[0]);
+												reader.onload = async () => {
+													try {
+														setLoading(true);
+														const binaryString =
+															reader.result;
+														const result =
+															await uploadDocuments(
+																binaryString
+															);
+														console.log(
+															binaryString
+														);
+														field.onChange(
+															result?.url
+														);
+														handleChange(
+															"passportPhoto"
+														)(
+															// @ts-ignore
+															result.url
+														);
+														setLoading(false);
+													} catch (error) {
+														setLoading(false);
+													} finally {
+														setLoading(false);
+													}
+												};
 											}}
 										/>
 									</div>
@@ -127,12 +124,37 @@ const SupportingDocumentsForm: React.FC<AcademicInformationProps> = ({
 									</FormLabel>
 									<div className="border border-input rounded-md mt-3 bg-background">
 										<FileUpload
+											loading={loading2}
 											onChange={(files) => {
-												field.onChange(files);
-												handleChange(
-													"recommendationLetter"
-													// @ts-ignore
-												)(files);
+												const reader = new FileReader();
+												reader.readAsDataURL(files[0]);
+												reader.onload = async () => {
+													try {
+														setLoading2(true);
+														const binaryString =
+															reader.result;
+
+														const result =
+															await uploadDocuments(
+																binaryString
+															);
+
+														field.onChange(
+															result?.url
+														);
+														handleChange(
+															"recommendationLetter"
+														)(
+															// @ts-ignore
+															result.url
+														);
+														setLoading2(false);
+													} catch (error) {
+														setLoading2(false);
+													} finally {
+														setLoading2(false);
+													}
+												};
 											}}
 										/>
 									</div>
@@ -145,8 +167,19 @@ const SupportingDocumentsForm: React.FC<AcademicInformationProps> = ({
 						<Button size="lg" onClick={prevStep} variant="outline">
 							Back
 						</Button>
-						<Button size="lg" type="submit" className="ml-2">
-							Continue
+						<Button
+							disabled={loading || loading2}
+							size="lg"
+							type="submit"
+							className="ml-2"
+						>
+							{loading || loading2 ? (
+								<>
+									<Loader2 className="w-4 h-4 animate-spin transition-all" />
+								</>
+							) : (
+								"Continue"
+							)}
 						</Button>
 					</div>
 				</form>

@@ -1,15 +1,6 @@
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
-// ✅ Allowed file types
-const acceptedImageTypes = [
-	"image/jpeg",
-	"image/png",
-	"image/jpg",
-	"image/gif",
-	"image/webp",
-];
-
 export const PersonalInformationFormSchema = z.object({
 	firstName: z.string().min(2, {
 		message: "First name must be at least 2 characters.",
@@ -77,9 +68,9 @@ export const AcademicInformationFormSchema = z.object({
 	courseOfChoice: z.string().min(2, {
 		message: "The course of your course is required.",
 	}),
-	oLevelResult: z.custom<File[]>((files) => files && files.length > 0, {
-		message: "Please upload your O'level result.",
-	}),
+	oLevelResult: z
+		.string()
+		.min(1, { message: "At least one O'Level result is required" }),
 });
 
 export const ScholarshipCriteriaFormSchema = z.object({
@@ -102,16 +93,11 @@ export const ScholarshipCriteriaFormSchema = z.object({
 
 export const SupportingDocumentsFormSchema = z.object({
 	passportPhoto: z
-		.instanceof(File)
-		.refine((file) => acceptedImageTypes.includes(file.type), {
-			message: "Only JPG, PNG, GIF, and WebP images are allowed.",
-		}),
-	recommendationLetter: z.custom<File[]>(
-		(files) => files && files.length > 0,
-		{
-			message: "Please upload your recommendation letter.",
-		}
-	),
+		.string()
+		.min(1, { message: "At least one O'Level result is required" }),
+	recommendationLetter: z
+		.string()
+		.min(1, { message: "At least one O'Level result is required" }),
 });
 
 export const ParentalInformationFormSchema = z.object({

@@ -32,7 +32,7 @@ const ApplicationForm = () => {
 		jambSubjects: [],
 		schoolOfChoice: "",
 		courseOfChoice: "",
-		oLevelResult: [] as File[],
+		oLevelResult: "",
 
 		// Scholarship Criteria Fields
 		otherScholarship: "",
@@ -42,8 +42,8 @@ const ApplicationForm = () => {
 		leadershipExperience: "",
 
 		// Supporting Documents
-		passportPhoto: null as File | null, // ✅ Store as File
-		recommendationLetter: null as File | null, // ✅ Store as File
+		passportPhoto: "", // ✅ Store as File
+		recommendationLetter: "", // ✅ Store as File
 
 		// Guardian's fields
 		guardianFullName: "",
@@ -79,24 +79,6 @@ const ApplicationForm = () => {
 						: e.target.value,
 			}));
 		};
-
-	// const handleChange =
-	// 	(input: keyof typeof formData) =>
-	// 	(
-	// 		e:
-	// 			| string
-	// 			| string[]
-	// 			| boolean
-	// 			| File
-	// 			| null
-	// 			| React.ChangeEvent<HTMLInputElement>
-	// 	) => {
-	// 		setFormData((prev) => ({
-	// 			...prev,
-	// 			//   @ts-ignore
-	// 			[input]: e instanceof File ? e : e?.target?.files?.[0] || e,
-	// 		}));
-	// 	};
 
 	// ✅ Step navigation handlers
 	const nextStep = () => setStep((prev) => prev + 1);
