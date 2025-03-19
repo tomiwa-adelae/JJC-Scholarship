@@ -16,7 +16,8 @@ export interface IUser extends Document {
 	schoolName: string;
 	universityAdmissionStatus: string;
 	jambScore: string;
-	jambSubjects: string[]; // ✅ Fix: Set correct type
+	jambSubjects: string[];
+	oLevelResult: string;
 	schoolOfChoice: string;
 	courseOfChoice: string;
 	otherScholarship: string;
