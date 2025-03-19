@@ -20,6 +20,8 @@ const FAQs = () => {
 					questions about the JJC Scholarship. If you need further
 					assistance, feel free to contact us.
 				</p>
+			</div>
+			<div className="sm:container">
 				<div className="mt-10">
 					<Accordion type="single" collapsible className="w-full">
 						{faqs.map(({ question, answer }, index) => (

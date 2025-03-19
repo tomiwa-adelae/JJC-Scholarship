@@ -76,7 +76,7 @@ const Showcase: React.FC<ShowcaseProps> = ({
 
 							{/* Right Image */}
 							{image && (
-								<div>
+								<div className="flex items-center justify-center">
 									<Image
 										src={image}
 										alt="Showcase image of a graduate woman wearing a black graduation cap and white lab coat"

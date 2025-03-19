@@ -13,6 +13,7 @@ const page = () => {
 					{ title: "Return home", slug: "/" },
 					{ title: "Apply for scholarship", slug: "/apply" },
 				]}
+				fullScreen={true}
 			/>
 		</div>
 	);
