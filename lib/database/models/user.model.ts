@@ -29,6 +29,8 @@ export interface IUser extends Document {
 	guardianEmail: string;
 	guardianPhoneNumber: string;
 	guardianOccupation: string;
+	passportPhoto: string;
+	recommendationLetter: string;
 	confirmInformation: boolean;
 	agreeToTerms: boolean;
 }
