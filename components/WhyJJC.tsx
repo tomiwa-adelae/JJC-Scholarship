@@ -52,7 +52,7 @@ const WhyJJC = () => {
 					Why apply for JJC Scholarship?
 				</h2>
 				<div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-					<div className="col-span-2 flex items-center justify-center">
+					<div className="md:col-span-2 col-span-3 flex items-center justify-center">
 						<Image
 							src={"/assets/images/why-jjc-img.jpg"}
 							alt={

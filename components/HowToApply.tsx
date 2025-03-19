@@ -142,13 +142,13 @@ const HowToApply = () => {
 							<Link href="/apply">Apply now</Link>
 						</Button>
 					</div>
-					<div className="col-span-2 flex items-center justify-center">
+					<div className="md:col-span-2 col-span-3 flex items-center justify-center">
 						<Image
 							src={"/assets/images/how-apply-img.jpg"}
 							alt={"A graduate smiling on a purple background"}
 							width={1000}
 							height={1000}
-							className="aspect-auto rounded-[30px]"
+							className="aspect-auto rounded-[30px] mx-auto"
 						/>
 					</div>
 				</div>
