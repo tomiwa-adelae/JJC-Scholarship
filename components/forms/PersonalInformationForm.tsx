@@ -56,7 +56,6 @@ const PersonalInformationForm: React.FC<PersonalInformationFormProps> = ({
 	});
 
 	const onSubmit = async (data: FormValues) => {
-		console.log("Validated data:", data);
 		nextStep();
 	};
 

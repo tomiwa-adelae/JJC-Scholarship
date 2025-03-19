@@ -82,19 +82,19 @@ const scholarshipInfoFields = [
 // ✅ Scholarship Criteria Fields
 const parentalInfoFields = [
 	{
-		label: "Guardian's name",
+		label: "Guardian's Name",
 		value: (data: any) => data.guardianFullName,
 	},
 	{
-		label: "Guardian's email",
+		label: "Guardian's Email",
 		value: (data: any) => data.guardianEmail,
 	},
 	{
-		label: "Guardian's phone number",
+		label: "Guardian's Phone Number",
 		value: (data: any) => data.guardianPhoneNumber,
 	},
 	{
-		label: "Guardian's occupation",
+		label: "Guardian's Occupation",
 		value: (data: any) => data.guardianOccupation,
 	},
 ];
@@ -120,7 +120,7 @@ const ConfirmInformation: React.FC<ConfirmInformationProps> = ({
 				});
 
 			setLoading(false);
-			router.push(`/success-application?id=${res._id}`);
+			router.push(`/success-application?id=${res?.scholarship?._id}`);
 		} catch (error) {
 			console.error("Submission Failed:", error);
 			setLoading(false);
@@ -170,12 +170,12 @@ const ConfirmInformation: React.FC<ConfirmInformationProps> = ({
 			{/* ✅ Supporting documents Confirmation */}
 			<div className="border border-input rounded-lg p-6 mb-4">
 				<h4 className="text-base uppercase text-primary font-semibold mb-4">
-					Supporting documents
+					Supporting Documents
 				</h4>
 				<div className="text-xs lg:text-[13px] font-medium text-gray-900 flex items-center justify-start flex-wrap gap-4">
 					<div className="border border-input rounded-lg p-6 mb-4 flex flex-col items-center justify-center text-center">
 						<h5 className="text-sm uppercase font-medium mb-3">
-							O'level result
+							O'level Result
 						</h5>
 						{formData.oLevelResult.split(".").pop() === "jpg" ? (
 							<Image
@@ -205,7 +205,7 @@ const ConfirmInformation: React.FC<ConfirmInformationProps> = ({
 					</div>
 					<div className="border border-input rounded-lg p-6 mb-4 flex flex-col items-center justify-center text-center">
 						<h5 className="text-sm uppercase font-medium mb-3">
-							Passport photograph
+							Passport Photograph
 						</h5>
 						{formData.passportPhoto.split(".").pop() === "jpg" ? (
 							<Image
@@ -236,7 +236,7 @@ const ConfirmInformation: React.FC<ConfirmInformationProps> = ({
 					</div>
 					<div className="border border-input rounded-lg p-6 mb-4 flex flex-col items-center justify-center text-center">
 						<h5 className="text-sm uppercase font-medium mb-3">
-							Recommendation letter
+							Recommendation Letter
 						</h5>
 						{formData.recommendationLetter.split(".").pop() ===
 						"jpg" ? (

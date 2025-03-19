@@ -121,7 +121,45 @@ export const contactDetails = [
 
 export const genders = ["Male", "Female"];
 
-export const stateOfOrigins = ["lagos", "oyo", "ondo"];
+export const stateOfOrigins = [
+	"Abia",
+	"Adamawa",
+	"Akwa Ibom",
+	"Anambra",
+	"Bauchi",
+	"Bayelsa",
+	"Benue",
+	"Borno",
+	"Cross River",
+	"Delta",
+	"Ebonyi",
+	"Edo",
+	"Ekiti",
+	"Enugu",
+	"Gombe",
+	"Imo",
+	"Jigawa",
+	"Kaduna",
+	"Kano",
+	"Katsina",
+	"Kebbi",
+	"Kogi",
+	"Kwara",
+	"Lagos",
+	"Nasarawa",
+	"Niger",
+	"Ogun",
+	"Ondo",
+	"Osun",
+	"Oyo",
+	"Plateau",
+	"Rivers",
+	"Sokoto",
+	"Taraba",
+	"Yobe",
+	"Zamfara",
+	"FCT (Abuja)",
+] as const;
 
 export const educationalLevels = [
 	"Secondary School",
@@ -132,28 +170,31 @@ export const educationalLevels = [
 export const admissionStatus = ["accepted", "awaiting result", "others"];
 
 export const subjects = [
-	{
-		id: "recents",
-		label: "Recents",
-	},
-	{
-		id: "home",
-		label: "Home",
-	},
-	{
-		id: "applications",
-		label: "Applications",
-	},
-	{
-		id: "desktop",
-		label: "Desktop",
-	},
-	{
-		id: "downloads",
-		label: "Downloads",
-	},
-	{
-		id: "documents",
-		label: "Documents",
-	},
+	{ id: "english", label: "English Language" },
+	{ id: "mathematics", label: "Mathematics" },
+	{ id: "biology", label: "Biology" },
+	{ id: "physics", label: "Physics" },
+	{ id: "chemistry", label: "Chemistry" },
+	{ id: "government", label: "Government" },
+	{ id: "history", label: "History" },
+	{ id: "literature", label: "Literature in English" },
+	{ id: "crk", label: "Christian Religious Knowledge" },
+	{ id: "irk", label: "Islamic Religious Knowledge" },
+	{ id: "civic", label: "Civic Education" },
+	{ id: "economics", label: "Economics" },
+	{ id: "geography", label: "Geography" },
+	{ id: "accounting", label: "Principles of Accounting" },
+	{ id: "commerce", label: "Commerce" },
+	{ id: "agriculture", label: "Agricultural Science" },
+	{ id: "french", label: "French" },
+	{ id: "arabic", label: "Arabic" },
+	{ id: "music", label: "Music" },
+	{ id: "finearts", label: "Fine Arts" },
+	{ id: "yoruba", label: "Yoruba" },
+	{ id: "igbo", label: "Igbo" },
+	{ id: "hausa", label: "Hausa" },
+	{ id: "computer", label: "Computer Studies" },
+	{ id: "foodandnutrition", label: "Food and Nutrition" },
+	{ id: "homeeconomics", label: "Home Economics" },
+	{ id: "bookkeeping", label: "Bookkeeping" },
 ] as const;

@@ -52,12 +52,9 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 
 	const onSubmit = form.handleSubmit(
 		(data) => {
-			console.log("Validated data:", data);
-			nextStep(); // ✅ Only moves to the next step if the form is valid
+			nextStep();
 		},
-		(errors) => {
-			console.log("Validation errors:", errors); // ✅ Logs errors to debug
-		}
+		(errors) => {}
 	);
 
 	return (
@@ -76,7 +73,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 						name="currentEducationalLevel"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Current educational level</FormLabel>
+								<FormLabel>Current Educational Level</FormLabel>
 								<Select
 									onValueChange={(value) => {
 										field.onChange(value);
@@ -115,7 +112,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 							name="schoolName"
 							render={({ field }) => (
 								<FormItem className="col-span-2 md:col-span-1">
-									<FormLabel>School name</FormLabel>
+									<FormLabel>School Name</FormLabel>
 									<FormControl>
 										<Input
 											placeholder="Enter your secondary school name"
@@ -136,7 +133,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>
-										University admission status
+										University Admission Status
 									</FormLabel>
 									<Select
 										onValueChange={(value) => {
@@ -264,7 +261,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>
-										Intended school of choice
+										Intended School of Choice
 									</FormLabel>
 									<FormControl>
 										<Input
@@ -288,7 +285,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>
-										Intended course of choice
+										Intended Course of Choice
 									</FormLabel>
 									<FormControl>
 										<Input
@@ -313,7 +310,7 @@ const AcademicInformationForm: React.FC<AcademicInformationProps> = ({
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
-									O'level results (WAEC, NECO, GCE)
+									O'level Results (WAEC, NECO, GCE)
 								</FormLabel>
 								<div className="border border-input rounded-md mt-3 bg-background">
 									<FileUpload

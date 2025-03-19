@@ -54,12 +54,9 @@ const ScholarshipCriteriaForm: React.FC<AcademicInformationProps> = ({
 
 	const onSubmit = form.handleSubmit(
 		(data) => {
-			console.log("Validated data:", data);
 			nextStep();
 		},
-		(errors) => {
-			console.log("Validation errors:", errors);
-		}
+		(errors) => {}
 	);
 
 	return (

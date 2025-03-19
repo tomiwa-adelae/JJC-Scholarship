@@ -30,7 +30,5 @@ export const uploadDocuments = async (document: any) => {
 
 			return { url: result.secure_url };
 		}
-	} catch (error) {
-		console.log(error);
-	}
+	} catch (error) {}
 };

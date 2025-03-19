@@ -18,8 +18,6 @@ const page = async ({ searchParams }: PageProps) => {
 
 	const res = await getScholarshipDetails(id);
 
-	console.log(res);
-
 	if (res.status === 400) redirect("/not-found");
 
 	return (

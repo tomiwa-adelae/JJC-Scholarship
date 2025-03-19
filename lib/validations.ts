@@ -23,7 +23,7 @@ export const PersonalInformationFormSchema = z.object({
 	dob: z.string().refine(
 		(val) => {
 			const dob = new Date(val);
-			const minAge = 1; // Minimum required age
+			const minAge = 16; // Minimum required age
 			const today = new Date();
 			const age = today.getFullYear() - dob.getFullYear();
 			return age >= minAge;
